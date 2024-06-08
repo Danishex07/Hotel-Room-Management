@@ -1,0 +1,57 @@
+<h2>Create Booking</h2>
+<form (ngSubmit)="submitBookingForm(bookingForm)" #bookingForm="ngForm">
+    <div class="form-group">
+        <label for="customerName">Customer Name</label>
+        <input type="text" class="form-control" id="customerName" [(ngModel)]="customer_name" name="customer_name"
+               required #customerNameInput="ngModel">
+        <div *ngIf="customerNameInput.invalid && (customerNameInput.dirty || customerNameInput.touched)"
+             class="text-danger">
+            Customer Name is required.
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="mobile">Mobile</label>
+            <input type="tel" class="form-control" id="mobile" [(ngModel)]="mobile" name="mobile" required
+                   pattern="^\+?(\d[\d ]{6,17})\d$" #mobileInput="ngModel">
+            <div *ngIf="mobileInput.invalid && (mobileInput.dirty || mobileInput.touched)" class="text-danger">
+                Please enter a valid mobile number .
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" [(ngModel)]="email" name="email" required
+                   pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" #emailInput="ngModel">
+            <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)" class="text-danger">
+                Please enter a valid email address.
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="customerAddress">Customer Address</label>
+        <input type="text" class="form-control" id="customerAddress" [(ngModel)]="address" name="address" required
+               #customerAddressInput="ngModel">
+        <div *ngIf="customerAddressInput.invalid && (customerAddressInput.dirty || customerAddressInput.touched)"
+             class="text-danger">
+            Customer Address is required.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="checkInDate">Check-In Date</label>
+        <input type="text" class="form-control" id="checkInDate" [(ngModel)]="check_in_date" name="check_in_date"
+               required readonly>
+    </div>
+    <div class="form-group">
+        <label for="checkOutDate">Check-Out Date</label>
+        <input type="text" class="form-control" id="checkOutDate" [(ngModel)]="check_out_date" name="check_out_date"
+               required readonly>
+    </div>
+    <div class="form-group">
+        <label for="roomNumber">Room Number</label>
+        <input type="text" class="form-control" id="roomNumber" [(ngModel)]="room_id" name="room_id" required readonly>
+    </div>
+    <div class="align-booking-button">
+        <button type="submit" class="btn btn-primary w-25 mr-2" [disabled]="bookingForm.invalid">Book</button>
+        <button type="button" class="btn btn-secondary w-25 ml-2" (click)="closeModal()">Close</button>
+    </div>
+</form>

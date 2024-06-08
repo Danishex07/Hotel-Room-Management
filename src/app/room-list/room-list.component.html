@@ -1,0 +1,53 @@
+<div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4">Hotel Room Reservation System</h2>
+
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label for="check_in_date">Check-in Date:</label>
+            <input id="check_in_date" type="date" [(ngModel)]="check_in_date" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label for="check_out_date">Check-out Date:</label>
+            <input id="check_out_date" type="date" [(ngModel)]="check_out_date" class="form-control" required>
+        </div>
+    </div>
+
+    <button class="btn btn-primary mt-3 center" (click)="checkAvailability()" [disabled]="!check_in_date || !check_out_date">Check Availability</button>
+
+
+    <div class="container mt-4 mb-2">
+        <ng-container *ngIf="isAvailable && availableRooms.length > 0; else noRoomsAvailable">
+            <h2 *ngIf="!startBooking">All Rooms</h2>
+            <h2 *ngIf="startBooking">Available Rooms</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let room of pagedRooms" class="room-list-row">
+                    <td>{{ room.room_number }}</td>
+                    <td>{{ room.room_type }}</td>
+                    <td>{{ room.price + ' £' }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary w-75" [disabled]="!startBooking"
+                                (click)="openBookingModal(room.room_number)">Book
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </ng-container>
+        <mat-paginator *ngIf="availableRooms.length > 0" [length]="availableRooms.length" [pageSize]="pageSize"
+                       (page)="pageChanged($event)">
+        </mat-paginator>
+        <ng-template #noRoomsAvailable>
+            <div class="alert alert-warning" role="alert">
+                No rooms available for the selected dates.
+            </div>
+        </ng-template>
+    </div>
+</div>
